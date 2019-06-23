@@ -3,6 +3,7 @@ package com.example.udpSocket;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 
 /**
@@ -20,5 +21,12 @@ public class UDPServer {
         datagramSocket.receive(packet);
         String info = new String(data, 0, packet.getLength());
         System.out.println("我是服务器，客户端说：" + info);
+
+        InetAddress address = packet.getAddress();
+        int port = packet.getPort();
+        byte[] response = "welcome!!!".getBytes();
+        DatagramPacket responsePacket = new DatagramPacket(response, response.length, address, port);
+        datagramSocket.send(responsePacket);
+        datagramSocket.close();
     }
 }

@@ -18,5 +18,13 @@ public class UDPClient {
         DatagramPacket packet = new DatagramPacket(data, data.length, serverAddress, port);
         DatagramSocket socket = new DatagramSocket();
         socket.send(packet);
+
+        //接收响应
+        byte[] responseData = new byte[1024];
+        DatagramPacket responsePcaket = new DatagramPacket(responseData, responseData.length);
+        socket.receive(responsePcaket);
+        String reply = new String(responseData, 0, packet.getLength());
+        System.out.println("我是客户端，服务器说：" + reply);
+        socket.close();
     }
 }
